@@ -26,7 +26,6 @@
 
 ### Для старта
 
-
-#### https://github.com/Wremeker/currency-app.git
-#### npm install 
-#### npm run start
+`git clone https://github.com/Wremeker/currency-app.git`
+`npm install`
+`npm run start`
