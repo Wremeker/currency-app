@@ -24,3 +24,9 @@
 * [Currency Api](http://data.fixer.io/api)
 * [Gradients](https://webgradients.com)
 
+### Для старта
+
+
+#### https://github.com/Wremeker/currency-app.git
+#### npm install 
+#### npm run start
