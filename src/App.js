@@ -1,28 +1,62 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+import initCurrency from './actions/initCurrency';
+import addCurrency from './actions/addCurrency';
+import CurrencyIcons from './components/CurrencyIcons';
+import CurrencyItem from './components/CurrencyItem';
+import CurrencyItems from './components/CurrencyItems';
 import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.initCurrency();
+  }
+  handleClick(e) {
+    this.props.addCurrency({
+      value: e.target.innerHTML,
+      timestamp: Date.now().toString()
+    })
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="currency-app">
+        <div className="currency-app__title">
+          <h1>Валютное веб приложение</h1>
+        </div>
+        <CurrencyIcons onClick={this.handleClick.bind(this)} />
+        {
+          this.props.eurCurrency ? (
+            <CurrencyItem
+              count="1"
+              data={this.props.eurCurrency}
+              firstCurrency={true}
+            />
+          ) : ''
+        }
+        <CurrencyItems />
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    eurCurrency: state.persistedReducer.EUR,
+    currency: state.persistedReducer.currency
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    initCurrency: () => {
+      dispatch(initCurrency());
+    },
+    addCurrency: data => {
+      dispatch(addCurrency(data));
+    },
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
